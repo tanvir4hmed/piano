@@ -1,0 +1,56 @@
+
+
+.piano-container {
+  position: relative;
+  width: 700px;
+  height: 200px;
+  /* margin: 50px auto;  */
+}
+
+/* White keys */
+.white-keys {
+  display: flex;
+  height: 100%;
+}
+
+.white-key {
+  flex: 0 0 60px; /* original ~90px → reduced by 1/3 */
+  margin: 0 1px;
+  background: white;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.white-key.pressed {
+  background: #ddd;
+  transform: translateY(4px);
+}
+
+/* Black keys */
+.black-keys {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  z-index: 2;
+}
+
+.black-key {
+  position: absolute;
+  width: 30px; /* proportional to white keys */
+  background: black;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 0 0 3px 3px;
+  transition: all 0.1s ease;
+}
+
+.black-key.pressed {
+  background: #333;
+  transform: translateY(4px);
+}
