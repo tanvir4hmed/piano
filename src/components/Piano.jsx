@@ -26,7 +26,10 @@ export default function Piano() {
 
   const playKey = (type, index) => {
     const note = type === "white" ? whiteKeys[index] : blackKeys[index];
-    const audio = new Audio(`/sounds/${note}.mp3`);
+    
+    const basePath = import.meta.env.BASE_URL; // automatically '/piano/' on GitHub Pages
+    const audio = new Audio(`${basePath}sounds/${note}.mp3`);
+
     audio.play();
 
     if (type === "white") {
