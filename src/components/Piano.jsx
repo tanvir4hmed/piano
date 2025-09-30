@@ -1,23 +1,26 @@
 ﻿import React, { useState, useEffect } from "react";
 import "./Piano.css";
 
+// White keys
 const whiteKeys = ["C", "D", "E", "F", "G", "A", "B"];
-const blackKeys = ["C#", "D#", null, "F#", "G#", "A#"];
+// Black keys renamed to -sharp
+const blackKeys = ["C-sharp", "D-sharp", "F-sharp", "G-sharp", "A-sharp"];
 
+// Keyboard mapping
 const keyMap = {
   // White keys
   a: 0, s: 1, d: 2, f: 3, g: 4, h: 5, j: 6,
   // Black keys
-  w: 0, e: 1, t: 3, y: 4, u: 5,
+  w: 0, e: 1, t: 2, y: 3, u: 4,
 };
 
-// Black key left positions (percentage)
+// Black key left positions (px)
 const blackKeyPositions = {
-  "C#": 45, // adjust to match your CSS width
-  "D#": 108,
-  "F#": 232,
-  "G#": 295,
-  "A#": 357,
+  "C-sharp": 45,
+  "D-sharp": 108,
+  "F-sharp": 232,
+  "G-sharp": 295,
+  "A-sharp": 357,
 };
 
 export default function Piano() {
@@ -26,10 +29,10 @@ export default function Piano() {
 
   const playKey = (type, index) => {
     const note = type === "white" ? whiteKeys[index] : blackKeys[index];
-    
-    const basePath = import.meta.env.BASE_URL; // automatically '/piano/' on GitHub Pages
-    const audio = new Audio(`${basePath}sounds/${note}.mp3`);
+    if (!note) return;
 
+    const basePath = import.meta.env.BASE_URL;
+    const audio = new Audio(`${basePath}sounds/${note}.mp3`);
     audio.play();
 
     if (type === "white") {
@@ -70,16 +73,14 @@ export default function Piano() {
       </div>
 
       <div className="black-keys">
-        {blackKeys.map((note, i) =>
-          note ? (
-            <div
-              key={i}
-              className={`black-key ${pressedBlack.includes(i) ? "pressed" : ""}`}
-              onMouseDown={() => playKey("black", i)}
-              style={{ left: `${blackKeyPositions[note]}px` }} // position each black key
-            />
-          ) : null
-        )}
+        {blackKeys.map((note, i) => (
+          <div
+            key={i}
+            className={`black-key ${pressedBlack.includes(i) ? "pressed" : ""}`}
+            onMouseDown={() => playKey("black", i)}
+            style={{ left: `${blackKeyPositions[note]}px` }}
+          />
+        ))}
       </div>
     </div>
   );
